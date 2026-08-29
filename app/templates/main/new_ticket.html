@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}New request — RelayDesk{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <div class="eyebrow">New request</div>
+    <h1>Describe your issue</h1>
+    <p class="page-sub">Be specific — e.g. "VPN is not connecting" or "Laptop won't power on".</p>
+  </div>
+</div>
+
+<div class="ticket-form-layout">
+  <div class="ticket-form-card">
+    <form id="ticket-form">
+      <div class="form-field">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" placeholder="Short summary of the issue" required maxlength="200">
+      </div>
+      <div class="form-field">
+        <label for="description">Describe what's happening</label>
+        <textarea id="description" name="description" rows="6" placeholder="e.g. My VPN client shows 'connection timed out' whenever I try to connect from home." required></textarea>
+      </div>
+      <button type="submit" id="submit-btn" class="btn-primary btn-block">Submit to agent pipeline →</button>
+    </form>
+  </div>
+
+  <div class="pipeline-panel" id="pipeline-panel">
+    <div class="pipeline-panel-header">
+      <span class="pipeline-title">Agent pipeline</span>
+      <span class="pipeline-status" id="pipeline-status">Waiting for request…</span>
+    </div>
+    <div class="pipeline-track" id="pipeline-track">
+      <div class="pipeline-step" data-agent="manager_agent">
+        <div class="pipeline-dot"></div>
+        <div class="pipeline-step-body">
+          <div class="pipeline-step-title">Manager Agent</div>
+          <div class="pipeline-step-desc">Classifies the request &amp; delegates</div>
+        </div>
+      </div>
+      <div class="pipeline-step" data-agent="troubleshooting_agent">
+        <div class="pipeline-dot"></div>
+        <div class="pipeline-step-body">
+          <div class="pipeline-step-title">Troubleshooting Agent</div>
+          <div class="pipeline-step-desc">Generates diagnostic steps</div>
+        </div>
+      </div>
+      <div class="pipeline-step" data-agent="knowledge_agent">
+        <div class="pipeline-dot"></div>
+        <div class="pipeline-step-body">
+          <div class="pipeline-step-title">Knowledge Agent</div>
+          <div class="pipeline-step-desc">Searches the knowledge base</div>
+        </div>
+      </div>
+      <div class="pipeline-step" data-agent="database_agent">
+        <div class="pipeline-dot"></div>
+        <div class="pipeline-step-body">
+          <div class="pipeline-step-title">Database Agent</div>
+          <div class="pipeline-step-desc">Checks employee &amp; device records</div>
+        </div>
+      </div>
+      <div class="pipeline-step" data-agent="response_agent">
+        <div class="pipeline-dot"></div>
+        <div class="pipeline-step-body">
+          <div class="pipeline-step-title">Response / Escalation</div>
+          <div class="pipeline-step-desc">Final answer or human handoff</div>
+        </div>
+      </div>
+    </div>
+    <div id="pipeline-result" class="pipeline-result hidden"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/new_ticket.js') }}"></script>
+{% endblock %}

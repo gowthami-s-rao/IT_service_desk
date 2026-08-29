@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Manage knowledge base — RelayDesk{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <div class="eyebrow">Admin</div>
+    <h1>Manage knowledge base</h1>
+    <p class="page-sub">Articles here are what the Knowledge Agent retrieves during triage.</p>
+  </div>
+</div>
+
+<div class="ticket-form-layout">
+  <div class="ticket-form-card">
+    <form id="kb-form">
+      <div class="form-field">
+        <label for="kb-title">Title</label>
+        <input type="text" id="kb-title" required maxlength="200">
+      </div>
+      <div class="form-field">
+        <label for="kb-category">Category</label>
+        <select id="kb-category">
+          <option value="network">Network</option>
+          <option value="hardware">Hardware</option>
+          <option value="software">Software</option>
+          <option value="account">Account</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="kb-keywords">Keywords (comma separated)</label>
+        <input type="text" id="kb-keywords" placeholder="vpn, connect, timeout">
+      </div>
+      <div class="form-field">
+        <label for="kb-content">Summary</label>
+        <textarea id="kb-content" rows="3" required></textarea>
+      </div>
+      <div class="form-field">
+        <label for="kb-steps">Steps (one per line)</label>
+        <textarea id="kb-steps" rows="4"></textarea>
+      </div>
+      <button type="submit" class="btn-primary btn-block">Add article</button>
+    </form>
+  </div>
+
+  <div class="pipeline-panel">
+    <div class="pipeline-panel-header"><span class="pipeline-title">Existing articles</span></div>
+    <div id="kb-admin-list" class="kb-admin-list"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/admin_knowledge.js') }}"></script>
+{% endblock %}

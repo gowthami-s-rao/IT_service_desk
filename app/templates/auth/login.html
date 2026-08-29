@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Sign in — RelayDesk{% endblock %}
+{% block auth_content %}
+<div class="auth-screen">
+  <div class="auth-visual">
+    <div class="auth-visual-inner">
+      <span class="brand-mark large">◆</span>
+      <h1>Relay<span class="brand-accent">Desk</span></h1>
+      <p class="auth-tag">Multi-agent IT service desk. One request in, five specialist agents at work.</p>
+      <div class="pipeline-preview">
+        <div class="pipe-node"><span>01</span>Manager Agent</div>
+        <div class="pipe-line"></div>
+        <div class="pipe-node"><span>02</span>Troubleshooting Agent</div>
+        <div class="pipe-line"></div>
+        <div class="pipe-node"><span>03</span>Knowledge Agent</div>
+        <div class="pipe-line"></div>
+        <div class="pipe-node"><span>04</span>Database Agent</div>
+        <div class="pipe-line"></div>
+        <div class="pipe-node"><span>05</span>Response Agent</div>
+      </div>
+    </div>
+  </div>
+  <div class="auth-form-panel">
+    <div class="auth-form-card">
+      <h2>Welcome back</h2>
+      <p class="auth-sub">Sign in to submit or track IT requests.</p>
+      <form method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="form-field">
+          {{ form.username.label }}
+          {{ form.username(placeholder="jsmith or you@company.com", autofocus=true) }}
+          {% for e in form.username.errors %}<span class="field-error">{{ e }}</span>{% endfor %}
+        </div>
+        <div class="form-field">
+          {{ form.password.label }}
+          {{ form.password(placeholder="••••••••") }}
+          {% for e in form.password.errors %}<span class="field-error">{{ e }}</span>{% endfor %}
+        </div>
+        <div class="form-row-between">
+          <label class="checkbox-label">{{ form.remember_me() }} Remember me</label>
+        </div>
+        <button type="submit" class="btn-primary btn-block">Sign in →</button>
+      </form>
+      <p class="auth-switch">No account? <a href="{{ url_for('auth.register') }}">Create one</a></p>
+      <div class="demo-creds">
+        <div class="demo-creds-title">Demo accounts</div>
+        <div><strong>Employee</strong> — jsmith / Employee@123</div>
+        <div><strong>Admin</strong> — admin / Admin@12345</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

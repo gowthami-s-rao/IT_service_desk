@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — RelayDesk{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <div class="eyebrow">Overview</div>
+    <h1>Hey {{ current_user.full_name.split(' ')[0] }}, what's broken today?</h1>
+    <p class="page-sub">Describe an issue and five specialist agents will triage it in seconds.</p>
+  </div>
+  <a href="{{ url_for('main.new_ticket') }}" class="btn-primary">+ New request</a>
+</div>
+
+<div class="quick-grid">
+  <a href="{{ url_for('main.new_ticket') }}" class="quick-card quick-card-accent">
+    <div class="quick-icon">✚</div>
+    <div class="quick-title">Submit new request</div>
+    <div class="quick-sub">Runs through the full agent pipeline instantly</div>
+  </a>
+  <a href="{{ url_for('main.tickets_list') }}" class="quick-card">
+    <div class="quick-icon">▤</div>
+    <div class="quick-title">My tickets</div>
+    <div class="quick-sub">Track status &amp; resolutions</div>
+  </a>
+  <a href="{{ url_for('main.knowledge_base') }}" class="quick-card">
+    <div class="quick-icon">◈</div>
+    <div class="quick-title">Knowledge base</div>
+    <div class="quick-sub">Browse self-help articles</div>
+  </a>
+</div>
+
+<div class="section-block">
+  <div class="section-header">
+    <h2>Recent tickets</h2>
+    <a href="{{ url_for('main.tickets_list') }}" class="link-more">View all →</a>
+  </div>
+
+  {% if tickets %}
+  <div class="ticket-table">
+    {% for t in tickets %}
+    <a href="{{ url_for('main.ticket_detail', ticket_id=t.id) }}" class="ticket-row">
+      <div class="ticket-row-main">
+        <div class="ticket-subject">{{ t.subject }}</div>
+        <div class="ticket-meta">#{{ t.id }} · {{ t.category|capitalize }} · {{ t.created_at.strftime('%b %d, %Y') }}</div>
+      </div>
+      <span class="status-pill status-{{ t.status }}">{{ t.status.replace('_',' ') }}</span>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-icon">◇</div>
+    <p>No tickets yet. Submit your first request and watch the agents work.</p>
+    <a href="{{ url_for('main.new_ticket') }}" class="btn-secondary">Submit a request</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

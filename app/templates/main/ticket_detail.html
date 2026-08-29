@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Ticket #{{ ticket.id }} — RelayDesk{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <div class="eyebrow">Ticket #{{ ticket.id }}</div>
+    <h1>{{ ticket.subject }}</h1>
+    <p class="page-sub">Opened {{ ticket.created_at.strftime('%b %d, %Y at %H:%M') }}
+      {% if current_user.is_admin() %} · {{ ticket.employee.full_name }}{% endif %}</p>
+  </div>
+  <span class="status-pill status-{{ ticket.status }} large">{{ ticket.status.replace('_',' ') }}</span>
+</div>
+
+<div class="ticket-detail-layout">
+  <div class="ticket-detail-main">
+    <div class="detail-card">
+      <div class="detail-card-label">Original request</div>
+      <p>{{ ticket.description }}</p>
+    </div>
+
+    <div class="detail-card">
+      <div class="detail-card-label">Agent pipeline trace</div>
+      <div class="agent-log" id="agent-log">
+        {% for m in ticket.messages %}
+        <div class="agent-log-entry sender-{{ m.sender }}">
+          <div class="agent-log-avatar">{{ m.sender[0]|upper }}</div>
+          <div class="agent-log-body">
+            <div class="agent-log-sender">{{ m.sender.replace('_',' ')|title }}</div>
+            <div class="agent-log-text">{{ m.content }}</div>
+            <div class="agent-log-time">{{ m.created_at.strftime('%H:%M:%S') }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% if ticket.status not in ['closed'] %}
+    <button class="btn-secondary" id="close-ticket-btn" data-ticket-id="{{ ticket.id }}">Mark ticket as closed</button>
+    {% endif %}
+  </div>
+
+  <div class="ticket-detail-side">
+    <div class="detail-card">
+      <div class="detail-card-label">Details</div>
+      <div class="detail-kv"><span>Category</span><strong>{{ ticket.category|capitalize }}</strong></div>
+      <div class="detail-kv"><span>Priority</span><strong>{{ ticket.priority|capitalize }}</strong></div>
+      <div class="detail-kv"><span>Status</span><strong>{{ ticket.status.replace('_',' ')|capitalize }}</strong></div>
+      <div class="detail-kv"><span>Updated</span><strong>{{ ticket.updated_at.strftime('%b %d, %H:%M') }}</strong></div>
+    </div>
+    {% if ticket.resolution %}
+    <div class="detail-card highlight-card">
+      <div class="detail-card-label">Resolution</div>
+      <p>{{ ticket.resolution }}</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/ticket_detail.js') }}"></script>
+{% endblock %}

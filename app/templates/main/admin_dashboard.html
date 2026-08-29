@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Admin — RelayDesk{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <div class="eyebrow">Admin overview</div>
+    <h1>Service desk performance</h1>
+    <p class="page-sub">Real-time stats across every ticket the agent pipeline has processed.</p>
+  </div>
+</div>
+
+<div class="stats-grid" id="stats-grid">
+  <div class="stat-card"><div class="stat-value" id="stat-total">—</div><div class="stat-label">Total tickets</div></div>
+  <div class="stat-card"><div class="stat-value" id="stat-resolved">—</div><div class="stat-label">Resolved by AI</div></div>
+  <div class="stat-card"><div class="stat-value" id="stat-escalated">—</div><div class="stat-label">Escalated to human</div></div>
+  <div class="stat-card"><div class="stat-value" id="stat-open">—</div><div class="stat-label">Open / in progress</div></div>
+  <div class="stat-card"><div class="stat-value" id="stat-users">—</div><div class="stat-label">Registered employees</div></div>
+</div>
+
+<div class="section-block">
+  <div class="section-header"><h2>By category</h2></div>
+  <div class="category-bars" id="category-bars"></div>
+</div>
+
+<div class="section-block">
+  <div class="section-header">
+    <h2>Latest tickets</h2>
+    <a href="{{ url_for('main.tickets_list') }}" class="link-more">View all →</a>
+  </div>
+  <div class="ticket-table" id="latest-tickets">
+    <div class="empty-state"><p>Loading…</p></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/admin_dashboard.js') }}"></script>
+{% endblock %}

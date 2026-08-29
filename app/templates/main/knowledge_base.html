@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Knowledge base — RelayDesk{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <div class="eyebrow">Self-help</div>
+    <h1>Knowledge base</h1>
+    <p class="page-sub">The same articles the Knowledge Agent searches during triage.</p>
+  </div>
+</div>
+
+<div class="kb-grid" id="kb-grid">
+  <div class="empty-state"><p>Loading articles…</p></div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/knowledge.js') }}"></script>
+{% endblock %}

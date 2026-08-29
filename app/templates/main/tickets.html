@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Tickets — RelayDesk{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <div class="eyebrow">{{ 'All tickets' if current_user.is_admin() else 'My tickets' }}</div>
+    <h1>{{ 'Every ticket in the system' if current_user.is_admin() else 'Your request history' }}</h1>
+  </div>
+  <div class="filter-tabs" id="filter-tabs">
+    <button class="filter-tab active" data-status="">All</button>
+    <button class="filter-tab" data-status="open">Open</button>
+    <button class="filter-tab" data-status="in_progress">In progress</button>
+    <button class="filter-tab" data-status="resolved">Resolved</button>
+    <button class="filter-tab" data-status="escalated">Escalated</button>
+    <button class="filter-tab" data-status="closed">Closed</button>
+  </div>
+</div>
+
+<div class="ticket-table" id="tickets-container">
+  <div class="empty-state"><p>Loading tickets…</p></div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/tickets.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Not found — RelayDesk{% endblock %}
+{% block content %}
+<div class="error-screen">
+  <div class="error-code">404</div>
+  <p>That page doesn't exist. It might have been moved or the URL is wrong.</p>
+  <a href="{{ url_for('main.dashboard') }}" class="btn-primary">Back to dashboard</a>
+</div>
+{% endblock %}
+{% block auth_content %}
+<div class="error-screen">
+  <div class="error-code">404</div>
+  <p>That page doesn't exist.</p>
+  <a href="{{ url_for('auth.login') }}" class="btn-primary">Back to sign in</a>
+</div>
+{% endblock %}

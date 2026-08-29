@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Server error — RelayDesk{% endblock %}
+{% block content %}
+<div class="error-screen">
+  <div class="error-code">500</div>
+  <p>Something went wrong on our end. Please try again in a moment.</p>
+  <a href="{{ url_for('main.dashboard') }}" class="btn-primary">Back to dashboard</a>
+</div>
+{% endblock %}
+{% block auth_content %}
+<div class="error-screen">
+  <div class="error-code">500</div>
+  <p>Something went wrong on our end.</p>
+  <a href="{{ url_for('auth.login') }}" class="btn-primary">Back to sign in</a>
+</div>
+{% endblock %}
