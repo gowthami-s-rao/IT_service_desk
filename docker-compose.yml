@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: relaydesk-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+
+  web:
+    build: .
+    container_name: relaydesk-web
+    depends_on:
+      - ollama
+    ports:
+      - "5000:5000"
+    environment:
+      - SECRET_KEY=${SECRET_KEY:-change-this-to-a-long-random-string}
+      - DATABASE_URL=sqlite:////app/instance/servicedesk.db
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama3.1}
+      - AGENT_MOCK_MODE=${AGENT_MOCK_MODE:-false}
+      - FLASK_ENV=production
+    volumes:
+      - app_instance:/app/instance
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
+  app_instance:
